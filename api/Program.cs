@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using api.Data; 
-using api.Models; 
+using api.Data;
+using api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpClient<FlightService>();
+
 
 // Agregar DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -23,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

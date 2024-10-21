@@ -1,4 +1,4 @@
-// Controllers/ProductosController.cs
+// Controllers/FlightController.cs
 using Microsoft.AspNetCore.Mvc;
 using api.Data;
 using api.Models;
@@ -8,52 +8,52 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductosController : ControllerBase
+    public class FlightController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public ProductosController(AppDbContext context)
+        public FlightController(AppDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Producto>>> GetProductos()
+        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
         {
-            return await _context.Productos.ToListAsync();
+            return await _context.Flights.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Producto>> GetProducto(int id)
+        public async Task<ActionResult<Flight>> GetFlight(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
+            var flight = await _context.Flights.FindAsync(id);
 
-            if (producto == null)
+            if (flight == null)
             {
                 return NotFound();
             }
 
-            return producto;
+            return flight;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Producto>> PostProducto(Producto producto)
+        public async Task<ActionResult<Flight>> PostFlight(Flight flight)
         {
-            _context.Productos.Add(producto);
+            _context.Flights.Add(flight);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetProducto), new { id = producto.Id }, producto);
+            return CreatedAtAction(nameof(GetFlight), new { id = flight.Id }, flight);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducto(int id, Producto producto)
+        public async Task<IActionResult> PutFlight(int id, Flight flight)
         {
-            if (id != producto.Id)
+            if (id != flight.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(producto).State = EntityState.Modified;
+            _context.Entry(flight).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Productos.Any(e => e.Id == id))
+                if (!_context.Flights.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }
@@ -75,15 +75,15 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProducto(int id)
+        public async Task<IActionResult> DeleteFlight(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
-            if (producto == null)
+            var flight = await _context.Flights.FindAsync(id);
+            if (flight == null)
             {
                 return NotFound();
             }
 
-            _context.Productos.Remove(producto);
+            _context.Flights.Remove(flight);
             await _context.SaveChangesAsync();
 
             return NoContent();
