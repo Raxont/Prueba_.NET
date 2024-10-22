@@ -5,5 +5,6 @@ namespace api.Models
         public int Id { get; set; }
         public required string FlightCarrier { get; set; }
         public required string FlightNumber { get; set; }
+        public int TransportId { get; internal set; }
     }
 }
