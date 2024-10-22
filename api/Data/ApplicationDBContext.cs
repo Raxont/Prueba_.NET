@@ -33,6 +33,13 @@ namespace api.Data
                 .HasOne(jf => jf.Flight)
                 .WithMany()
                 .HasForeignKey(jf => jf.FlightId);
+
+            modelBuilder.Entity<Transport>()
+                .HasKey(t => t.Id); // Define la clave primaria
+            
+            modelBuilder.Entity<Transport>()
+                .Property(t => t.Id)
+                .ValueGeneratedOnAdd(); // Asegúrate de que sea autogenerado
         }
     }
 }

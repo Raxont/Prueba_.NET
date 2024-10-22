@@ -5,6 +5,11 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuración de logging
+builder.Logging.ClearProviders(); // Opcional, para limpiar los proveedores de logging por defecto
+builder.Logging.AddConsole(); // Agregar el proveedor de logging de consola
+builder.Logging.AddDebug(); // Agregar el proveedor de logging de debug
+
 // Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -32,7 +37,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
