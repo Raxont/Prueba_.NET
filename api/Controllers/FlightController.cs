@@ -56,16 +56,26 @@ namespace api.Controllers // Definición del espacio de nombres para los control
 
         // Método para actualizar un vuelo existente.
         [HttpPut("{id}")] // Indica que este método maneja las solicitudes PUT en la ruta "api/Flight/{id}".
-        public async Task<IActionResult> PutFlight(int id, Flight flight)
+        public async Task<IActionResult> PutFlight(int id, [FromBody] Flight flight)
         {
-            // Verifica si el ID del vuelo coincide con el ID de la ruta.
-            if (id != flight.Id)
+            // Verifica si el objeto flight es nulo.
+            if (flight == null)
             {
-                return BadRequest(); // Devuelve un resultado 400 Bad Request si los IDs no coinciden.
+                return BadRequest("Flight object is null"); // Devuelve un resultado 400 Bad Request si el objeto está vacío.
             }
 
-            // Marca el vuelo como modificado en el contexto.
-            _context.Entry(flight).State = EntityState.Modified;
+            // Busca el vuelo existente en la base de datos.
+            var existingFlight = await _context.Flights.FindAsync(id);
+            if (existingFlight == null)
+            {
+                return NotFound(); // Devuelve 404 Not Found si el vuelo no existe.
+            }
+
+            // Actualiza solo los campos necesarios del vuelo existente.
+            existingFlight.Origin = flight.Origin; // Asegúrate de que estas propiedades existen en tu modelo
+            existingFlight.Destination = flight.Destination; // Asegúrate de que estas propiedades existen en tu modelo
+            existingFlight.Price = flight.Price; // Asegúrate de que estas propiedades existen en tu modelo
+            existingFlight.TransportId = flight.TransportId; // Asegúrate de que estas propiedades existen en tu modelo
 
             try
             {
@@ -79,10 +89,7 @@ namespace api.Controllers // Definición del espacio de nombres para los control
                 {
                     return NotFound(); // Devuelve un resultado 404 Not Found si no se encuentra.
                 }
-                else
-                {
-                    throw; // Si el vuelo existe, vuelve a lanzar la excepción.
-                }
+                throw; // Si el vuelo existe, vuelve a lanzar la excepción.
             }
 
             return NoContent(); // Devuelve un resultado 204 No Content si la actualización fue exitosa.

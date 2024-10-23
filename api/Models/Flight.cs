@@ -10,8 +10,8 @@ namespace api.Models // Definición del espacio de nombres para los modelos de d
 
         public required double Price { get; set; } // Propiedad que representa el precio del vuelo. Se marca como "required", indicando que es obligatorio.
 
-        public required int TransportId { get; set; } // Propiedad que representa el identificador del transporte asociado al vuelo. Se marca como "required".
+        public int TransportId { get; set; } // Propiedad que representa el identificador del transporte asociado al vuelo. Se marca como "required".
 
-        public required Transport Transport { get; set; } // Propiedad que representa el objeto Transport asociado a este vuelo. También se marca como "required".
+        public Transport? Transport { get; set; } // Propiedad que representa el objeto Transport asociado a este vuelo. También se marca como "required".
     }
 }
