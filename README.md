@@ -214,19 +214,15 @@ El controlador `FlightController` maneja las operaciones relacionadas con la ges
    - **Ejemplo de datos mostrados**:
 
    ```json
+   Parametro: id = 1
    Body: {
-     "id": 6,
-     "origin": "CTG",
-     "destination": "BGA",
-     "price": 3100,
-     "transportId": 20,
-     "transport": {
-       "flightCarrier": "AV",
-       "flightNumber": "9090"
-      }
+         "origin": "BGA",
+         "destination": "BTA",
+         "price": 3100,
+         "transportId": 2
    }
    ```
-
+   
 5. **DeleteFlight**
 
    - **Ruta**: `DELETE /api/flight/{id}`
