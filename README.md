@@ -100,6 +100,20 @@ dotnet run
             FlightService.cs
 ```
 
+## Como realizar las pruebas unitarias:
+
+Puede usar swagger para la pruebas unitarias de cada endpoint de esta manera
+
+```
+http://localhost:5230/swagger/index.html
+```
+
+O puede usarlo con otra api rest client de su preferencia con la siguiente url;
+
+```
+http://localhost:5230/api/{controlador}
+```
+
 ## Controladores
 
 ### FlightController.cs
@@ -181,31 +195,22 @@ El controlador `FlightController` maneja las operaciones relacionadas con la ges
 
      ```
      Body: {
-       "origin": "CTG",
-       "destination": "BGA",
-       "price": 3000,
-       "transportId": 19,
-       "transport": {
-         "flightCarrier": "AV",
-         "flightNumber": "9090"
-       }
+           "origin": "BGA",
+           "destination": "BTA",
+           "price": 3100,
+           "transportId": 2
      }
      Respuesta:{
        "$id": "1",
-       "id": 6,
-       "origin": "CTG",
-       "destination": "BGA",
-       "price": 3000,
-       "transportId": 19,
-       "transport": {
-         "$id": "2",
-         "id": 19,
-         "flightCarrier": "AV",
-         "flightNumber": "9090"
-       }
+       "id": 1,
+       "origin": "BGA",
+       "destination": "BTA",
+       "price": 3100,
+       "transportId": 2,
+       "transport": null
      }
      ```
-
+   
 4. **PutFlight**
 
    - **Ruta**: `PUT /api/flight/{id}`
@@ -218,7 +223,7 @@ El controlador `FlightController` maneja las operaciones relacionadas con la ges
    Body: {
          "origin": "BGA",
          "destination": "BTA",
-         "price": 3100,
+         "price": 3200,
          "transportId": 2
    }
    ```
@@ -234,7 +239,7 @@ El controlador `FlightController` maneja las operaciones relacionadas con la ges
    - **Ejemplo de datos mostrados**:
    
      ```json
-     Parametro: id = 6;
+     Parametro: id = 1;
      ```
 
 #### Inyección de Dependencias
