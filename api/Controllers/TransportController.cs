@@ -50,14 +50,24 @@ namespace api.Controllers // Definición del espacio de nombres para los control
 
         // Método para actualizar un transporte existente.
         [HttpPut("{id}")] // Indica que este método maneja las solicitudes PUT para un transporte específico.
-        public async Task<IActionResult> PutTransport(int id, Transport transport)
+        public async Task<IActionResult> PutTransport(int id, [FromBody] Transport transport)
         {
-            if (id != transport.Id) // Verifica si el ID proporcionado coincide con el del transporte.
+            // Verifica si el objeto transport es nulo.
+            if (transport == null)
             {
-                return BadRequest(); // Devuelve un resultado 400 Bad Request si hay discrepancias.
+                return BadRequest("Transport object is null"); // Devuelve un resultado 400 Bad Request si el objeto está vacío.
             }
 
-            _context.Entry(transport).State = EntityState.Modified; // Marca el transporte como modificado.
+            // Busca el transporte existente en la base de datos.
+            var existingTransport = await _context.Transports.FindAsync(id);
+            if (existingTransport == null)
+            {
+                return NotFound(); // Devuelve 404 Not Found si el transporte no existe.
+            }
+
+            // Actualiza solo los campos necesarios.
+            existingTransport.FlightCarrier = transport.FlightCarrier;
+            existingTransport.FlightNumber = transport.FlightNumber;
 
             try
             {
@@ -69,14 +79,11 @@ namespace api.Controllers // Definición del espacio de nombres para los control
                 {
                     return NotFound(); // Devuelve 404 Not Found si no existe.
                 }
-                else
-                {
-                    throw; // Si hay otro error, vuelve a lanzar la excepción.
-                }
+                throw; // Si hay otro error, vuelve a lanzar la excepción.
             }
 
             return NoContent(); // Devuelve un resultado 204 No Content si la actualización fue exitosa.
-        }
+}
 
         // Método para eliminar un transporte.
         [HttpDelete("{id}")] // Indica que este método maneja las solicitudes DELETE para un transporte específico.
