@@ -1,6 +1,8 @@
 # API RESTful para Gestión de Vuelos
 
-Este proyecto es una API RESTful desarrollada con ASP.NET Core que permite la gestión de vuelos. La aplicación utiliza un enfoque de arquitectura MVC (Modelo-Vista-Controlador) y Entity Framework Core para interactuar con una base de datos SQL Server.
+Este proyecto es una API RESTful desarrollada con ASP.NET Core que permite la gestión de vuelos. La aplicación utiliza un enfoque de arquitectura MVC (Modelo-Vista-Controlador) y Entity Framework Core para interactuar con una base de datos SQL Server. 
+
+Se optimizan la cantidad de peticiones a la api externa usando un cache, se agrega la posibilidad de configurar el número máximo de vuelos que puede tener una  ruta. 
 
 ## Tecnologías usadas
 
